@@ -11,13 +11,17 @@ function shuffle(inputDeck){
     return outputDeck;
 }
 
-// first loop is for the 4 sleeves, second loop is for the value ace -> king
-for (let i = 0; i < 4; i++){
-    for (let x = 0; x < 13; x++){
-        // creates the card in the correct position in the deck
-        deck[13 * i + x] = [x + 1, i + 1];
+function createDeck(){
+    let outputDeck = [];
+    // first loop is for the 4 sleeves, second loop is for the value ace -> king
+    for (let i = 0; i < 4; i++){
+        for (let x = 0; x < 13; x++){
+            // creates the card in the correct position in the deck
+            outputDeck[13 * i + x] = [x + 1, i + 1];
+        }
     }
+    return outputDeck;
 }
 
-let deck = [];
+let deck = createDeck();
 deck = shuffle(deck);
