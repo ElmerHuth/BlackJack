@@ -1,8 +1,55 @@
+function playBlackJack(){
+
+    // Setup
+    let deck = createDeck();
+    let playerhand = [];
+    let dealerhand = [];
+    let playermove = '';
+
+    startRound();
+
+    // Play
+    while (true){
+        playermove = prompt(
+            `
+            Players hand: ${printCards(playerhand)}
+            
+            Dealers hand: ${printCards(dealerhand, true)}
+            
+            
+            Will you hit or stand?`
+            );
+        if (playermove == 'hit'){
+            deal(deck, playerhand);
+        }
+        else if (playermove == 'stand'){
+            while(points(dealer) < 17){
+                deal(deck, dealerhand);
+                playermove = prompt(
+                    `
+                    Players hand: ${printCards(playerhand)}
+                    
+                    Dealers hand: ${printCards(dealerhand, true)}
+                    
+                    
+                    `
+
+                );
+            }
+        }
+    }
+}
+
+function startRound(){
+    deck = shuffle(deck);
+    deal(deck, dealerhand, 2);
+    deal(deck, playerhand, 2);
+}
+
 // ace = 1, knight = 11, queen = 12, king = 13
 // hearts = 1, diamonds = 2, spades = 3, clovers = 4
 // deck = [..., [13, 2], ...] 
 // first number is value and second is sleeve in this case: king of diamonds
-
 function createDeck(){
     let outputDeck = [];
     // first loop is for the 4 sleeves, second loop is for the value ace -> king
@@ -32,6 +79,10 @@ function deal(deck, hand, count = 1){
         hand.push(deck[0]);
         deck.splice(0, 1);
     }
+}
+
+function points(target){
+
 }
 
 function printCards(cards, hidefirst = false){
@@ -72,44 +123,4 @@ function printCard(card){
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
 
-// Setup
-let deck = createDeck();
-let playerhand = [];
-let dealerhand = [];
-let playermove = '';
-
-// Start Round
-deck = shuffle(deck);
-deal(deck, dealerhand, 2);
-deal(deck, playerhand, 2);
-
-// Play
-while (true){
-    playermove = prompt(
-        `
-        Players hand: ${printCards(playerhand)}
-        
-        Dealers hand: ${printCards(dealerhand, true)}
-        
-        
-        Will you hit or stand?`
-        );
-    if (playermove == 'hit'){
-        deal(deck, playerhand);
-    }
-    else if (playermove == 'stand'){
-        while(points(dealer) < 17){
-            deal(deck, dealerhand);
-            playermove = prompt(
-                `
-                Players hand: ${printCards(playerhand)}
-                
-                Dealers hand: ${printCards(dealerhand, true)}
-                
-                
-                `
-
-            );
-        }
-    }
-}
+playBlackJack();
