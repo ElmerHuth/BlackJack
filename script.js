@@ -3,17 +3,6 @@
 // deck = [..., [13, 2], ...] 
 // first number is value and second is sleeve in this case: king of diamonds
 
-function shuffle(Deck){
-    let inputDeck = Deck;
-    let outputDeck = [];
-    while (outputDeck.length < 52){
-        let randomindex = Math.floor(Math.random() * (inputDeck.length - 1 + 1))
-        outputDeck.push(inputDeck[randomindex]);
-        inputDeck.splice(randomindex, 1);
-    }
-    return outputDeck;
-}
-
 function createDeck(){
     let outputDeck = [];
     // first loop is for the 4 sleeves, second loop is for the value ace -> king
@@ -26,12 +15,31 @@ function createDeck(){
     return outputDeck;
 }
 
-function printCards(cards, isdealer = false){
+function shuffle(Deck){
+    let inputDeck = Deck;
+    let outputDeck = [];
+    while (outputDeck.length < 52){
+        let randomindex = Math.floor(Math.random() * (inputDeck.length - 1 + 1))
+        outputDeck.push(inputDeck[randomindex]);
+        inputDeck.splice(randomindex, 1);
+    }
+    return outputDeck;
+}
+
+function deal(deck, hand, count = 1){
+    for (let i = 0; i < count; i++)
+    {
+        hand.push(deck[0]);
+        deck.splice(0, 1);
+    }
+}
+
+function printCards(cards, hidefirst = false){
     let output = '';
     for (let i = 0; i < cards.length; i++){
         output += `${printCard(cards[i])}, `;
     }
-    if (isdealer == true){
+    if (hidefirst == true){
         output = output.replace(printCard(cards[0]), 'HIDDEN');
     }
     // substring removes the last ', '
@@ -64,19 +72,44 @@ function printCard(card){
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
 
-function deal(deck, hand, count = 1){
-    for (let i = 0; i < count; i++)
-    {
-        hand.push(deck[0]);
-        deck.splice(0, 1);
-    }
-}
-
+// Setup
 let deck = createDeck();
 let playerhand = [];
 let dealerhand = [];
+let playermove = '';
 
+// Start Round
 deck = shuffle(deck);
 deal(deck, dealerhand, 2);
 deal(deck, playerhand, 2);
-console.log(`Players hand: ${printCards(playerhand)}\nDealers hand: ${printCards(dealerhand, true)}`);
+
+// Play
+while (true){
+    playermove = prompt(
+        `
+        Players hand: ${printCards(playerhand)}
+        
+        Dealers hand: ${printCards(dealerhand, true)}
+        
+        
+        Will you hit or stand?`
+        );
+    if (playermove == 'hit'){
+        deal(deck, playerhand);
+    }
+    else if (playermove == 'stand'){
+        while(points(dealer) < 17){
+            deal(deck, dealerhand);
+            playermove = prompt(
+                `
+                Players hand: ${printCards(playerhand)}
+                
+                Dealers hand: ${printCards(dealerhand, true)}
+                
+                
+                `
+
+            );
+        }
+    }
+}
