@@ -41,6 +41,11 @@ function playBlackJack(){
 }
 
 function startRound(){
+
+    // put everyones cards back into the deck
+    returncards(playerhand, playerhand.length);
+    returncards(dealerhand, dealerhand.length);
+ 
     deck = shuffle(deck);
     deal(deck, dealerhand, 2);
     deal(deck, playerhand, 2);
@@ -79,6 +84,13 @@ function deal(deck, hand, count = 1){
         hand.push(deck[0]);
         deck.splice(0, 1);
     }
+}
+
+function returncards(target, amount){
+    for(let i = 0; i < amount; i++){
+        deck.push(target[i]);
+    }
+    target = [];
 }
 
 function points(target){
