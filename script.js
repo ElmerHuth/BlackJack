@@ -4,12 +4,27 @@ let playerhand = [];
 let dealerhand = [];
 let playermove = '';
 
-function playBlackJack(){
-    
-    startRound();
+playBlackJack();
 
-    // Play
-    while (true){
+function playBlackJack(){
+    startRound();
+    playerturn();
+    dealerturn();
+}
+
+function startRound(){
+
+    // put everyones cards back into the deck if you've played before
+    returncards(playerhand, playerhand.length);
+    returncards(dealerhand, dealerhand.length);
+ 
+    deck = shuffle(deck);
+    deal(deck, dealerhand, 2);
+    deal(deck, playerhand, 2);
+}
+
+function playerturn(){
+    while (playermove != "stand"){
         playermove = prompt(
             `
             Players hand: ${printCards(playerhand)}
@@ -22,33 +37,23 @@ function playBlackJack(){
         if (playermove == 'hit'){
             deal(deck, playerhand);
         }
-        else if (playermove == 'stand'){
-            while(points(dealer) < 17){
-                deal(deck, dealerhand);
-                playermove = prompt(
-                    `
-                    Players hand: ${printCards(playerhand)}
-                    
-                    Dealers hand: ${printCards(dealerhand, true)}
-                    
-                    
-                    `
-
-                );
-            }
-        }
     }
 }
 
-function startRound(){
+function dealerturn(){
+    while(points(dealerhand)[0] < 17){
+        deal(deck, dealerhand);
+        playermove = prompt(
+            `
+            Players hand: ${printCards(playerhand)}
+            
+            Dealers hand: ${printCards(dealerhand)}
+            
+            
+            `
 
-    // put everyones cards back into the deck if you've played before
-    returncards(playerhand, playerhand.length);
-    returncards(dealerhand, dealerhand.length);
- 
-    deck = shuffle(deck);
-    deal(deck, dealerhand, 2);
-    deal(deck, playerhand, 2);
+        );
+    }
 }
 
 // ace = 1, knight = 11, queen = 12, king = 13
@@ -144,5 +149,3 @@ function printCard(card){
     ]];
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
-
-playBlackJack();
