@@ -1,11 +1,11 @@
+// Setup
+let deck = createDeck();
+let playerhand = [];
+let dealerhand = [];
+let playermove = '';
+
 function playBlackJack(){
-
-    // Setup
-    let deck = createDeck();
-    let playerhand = [];
-    let dealerhand = [];
-    let playermove = '';
-
+    
     startRound();
 
     // Play
@@ -42,7 +42,7 @@ function playBlackJack(){
 
 function startRound(){
 
-    // put everyones cards back into the deck
+    // put everyones cards back into the deck if you've played before
     returncards(playerhand, playerhand.length);
     returncards(dealerhand, dealerhand.length);
  
@@ -94,7 +94,17 @@ function returncards(target, amount){
 }
 
 function points(target){
-
+    let points = [0, 0];
+    for (let i = 0; i < target.length; i++){
+        if (target[i][0] == 1){
+            points[0] += 10;
+            points[1]++;
+        }
+        else{
+            points[0] += target[i][0];
+        }
+    }
+    return points;
 }
 
 function printCards(cards, hidefirst = false){
