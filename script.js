@@ -39,64 +39,29 @@ function printCards(cards, isdealer = false){
 }
 
 function printCard(card){
-    let output = '';
-    switch (card[0]) {
-        case 1:
-            output += 'Ace'
-            break;
-        case 2:
-            output += 'Two'
-            break;
-        case 3:
-            output += 'Three'
-            break;
-        case 4:
-            output += 'Four'
-            break;
-        case 5:
-            output += 'Five'
-            break;
-        case 6:
-            output += 'Six'
-            break;
-        case 7:
-            output += 'Seven'
-            break;
-        case 8:
-            output += 'Eight'
-            break;
-        case 9:
-            output += 'Nine'
-            break;
-        case 10:
-            output += 'Ten'
-            break;
-        case 11:
-            output += 'Knight'
-            break;
-        case 12:
-            output += 'Queen'
-            break;
-        case 13:
-            output += 'King'
-            break;
-    }
-    output += ' of '
-    switch (card[1]){
-        case 1:
-            output += 'hearts'
-            break;
-        case 2:
-            output += 'diamonds'
-            break;
-        case 3:
-            output += 'spades'
-            break;
-        case 4:
-            output += 'clovers'
-            break;
-    }
-    return output;
+    const names = 
+    [[
+        'Ace',
+        'Two',
+        'Three',
+        'Four',
+        'Five',
+        'Six',
+        'Seven',
+        'Eight',
+        'Nine',
+        'Ten',
+        'Knight',
+        'Queen',
+        'King'
+    ],
+    [
+        'hearts',
+        'diamonds',
+        'spades',
+        'clovers'
+    ]];
+    return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
 
 function deal(deck, hand, count = 1){
