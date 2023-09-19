@@ -26,70 +26,92 @@ function createDeck(){
     return outputDeck;
 }
 
-function printCard([value, sleeve]){
-    let card = '';
-    switch (value) {
+function printCards(cards, isdealer = false){
+    let output = '';
+    for (let i = 0; i < cards.length; i++){
+        output += `${printCard(cards[i])}, `;
+    }
+    if (isdealer == true){
+        output = output.replace(printCard(cards[0]), 'HIDDEN');
+    }
+    // substring removes the last ', '
+    return output.substring(0, output.length - 2);
+}
+
+function printCard(card){
+    let output = '';
+    switch (card[0]) {
         case 1:
-            card += 'Ace'
+            output += 'Ace'
             break;
         case 2:
-            card += 'Two'
+            output += 'Two'
             break;
         case 3:
-            card += 'Three'
+            output += 'Three'
             break;
         case 4:
-            card += 'Four'
+            output += 'Four'
             break;
         case 5:
-            card += 'Five'
+            output += 'Five'
             break;
         case 6:
-            card += 'Six'
+            output += 'Six'
             break;
         case 7:
-            card += 'Seven'
+            output += 'Seven'
             break;
         case 8:
-            card += 'Eight'
+            output += 'Eight'
             break;
         case 9:
-            card += 'Nine'
+            output += 'Nine'
             break;
         case 10:
-            card += 'Ten'
+            output += 'Ten'
             break;
         case 11:
-            card += 'Knight'
+            output += 'Knight'
             break;
         case 12:
-            card += 'Queen'
+            output += 'Queen'
             break;
         case 13:
-            card += 'King'
+            output += 'King'
             break;
     }
-    card += ' of '
-    switch (sleeve){
+    output += ' of '
+    switch (card[1]){
         case 1:
-            card += "hearts"
+            output += 'hearts'
             break;
         case 2:
-            card += "diamonds"
+            output += 'diamonds'
             break;
         case 3:
-            card += "spades"
+            output += 'spades'
             break;
         case 4:
-            card += "clovers"
+            output += 'clovers'
             break;
     }
-    return card
+    return output;
+}
+
+function deal(deck, hand, count = 1){
+    for (let i = 0; i < count; i++)
+    {
+        hand.push(deck[0]);
+        deck.splice(0, 1);
+    }
 }
 
 let deck = createDeck();
+let playerhand = [];
+let dealerhand = [];
+
 deck = shuffle(deck);
-for (let i = 0; i < deck.length; i++){
-    console.log(printCard(deck[i]));
-}
-console.log(deck.length);
+deal(deck, dealerhand, 2);
+deal(deck, playerhand, 2);
+console.log(`Players hand: ${printCards(playerhand)}\nDealers hand: ${printCards(dealerhand, true)}`);
