@@ -1,5 +1,5 @@
 // Setup
-//let deck = createDeck();
+let deck = [[1,1],[10,1],[13,1],[13,1]];//createDeck();
 let playerhand = [];
 let dealerhand = [];
 let action = '';
@@ -8,7 +8,7 @@ let action = '';
 returncards(playerhand, playerhand.length);
 returncards(dealerhand, dealerhand.length);
 
-deck = shuffle(deck);
+//deck = shuffle(deck);
 deal(deck, dealerhand, 2);
 deal(deck, playerhand, 2);
 
@@ -68,7 +68,7 @@ function endgame(){
     }
     else{
         result = 'Player is BUST, Dealer Wins!';
-        dontreveal = true;
+        reveal = true;
     }
     action = prompt(`
 Dealers hand(${points(dealerhand, reveal)[0]}): ${printCards(dealerhand, reveal)}
