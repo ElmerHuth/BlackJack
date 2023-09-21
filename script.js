@@ -36,7 +36,7 @@ function gameloop(){
 
 function playerturn(){
     while (action != "stand" && points(playerhand)[0] < 22){
-        action = prompt(`Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand, true)}
+        action = prompt(`Dealers hand(${points(dealerhand, true, true)[0]}): ${printCards(dealerhand, true)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
@@ -49,8 +49,8 @@ Will you hit or stand?`);
 
 function dealerturn(){
     // skips play if player is bust
-    while(points(dealerhand)[0] < 17 && points(playerhand)[0] < 22){
-        action = prompt(`Dealers hand(${points(dealerhand)[0]}): ${printCards(dealerhand)}
+    while(points(dealerhand, true)[0] < 17 && points(playerhand)[0] < 22){
+        action = prompt(`Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
@@ -61,13 +61,13 @@ Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
 
 function endgame(){
     let result = '';
-    // Dont reveal dealers card if player is bust
-    let reveal = false;
+    // hide dealers card if player is bust
+    let hide = false;
     // Förlåt för alla 'if' satser
     if (points(playerhand)[0] <= 21){
-        if (points(dealerhand)[0] <= 21){
-            if (points(playerhand)[0] <= points(dealerhand)[0]){
-                if(points(playerhand)[0] == points(dealerhand)[0]){
+        if (points(dealerhand, true)[0] <= 21){
+            if (points(playerhand)[0] <= points(dealerhand, true)[0]){
+                if(points(playerhand)[0] == points(dealerhand, true)[0]){
                     result = 'The game is a Draw!';
                 }
                 else{
@@ -84,9 +84,9 @@ function endgame(){
     }
     else{
         result = 'Player is BUST, Dealer Wins!';
-        reveal = true;
+        hide = true;
     }
-    action = prompt(`Dealers hand(${points(dealerhand, reveal)[0]}): ${printCards(dealerhand, reveal)}
+    action = prompt(`Dealers hand(${points(dealerhand, true, hide)[0]}): ${printCards(dealerhand, hide)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
@@ -173,7 +173,7 @@ function printCard(card){
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
 
-function points(target, hidefirst = false){
+function points(target, dealer = false, hidefirst = false){
     let points = [0, 0];
     for (let i = 0; i < target.length; i++){
         if (i == 0 && hidefirst){
@@ -200,7 +200,7 @@ function points(target, hidefirst = false){
     }
     // add aces to points if possible
     for (let i = 0; i < points[1]; i++){
-        if (points[0] + 10 < 22 && points[1] > 0){
+        if ((points[0] + 10 < 22 && points[1] > 0 && !dealer) || (dealer && target[0][0] == 1 && i == 0)){
             points[0] += 10;
             points[1]--;
         }
