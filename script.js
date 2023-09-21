@@ -19,9 +19,9 @@ function playerturn(){
     while (action != "stand"){
         action = prompt(
             `
-Dealers hand: ${printCards(dealerhand, true)}
+Dealers hand(${points(dealerhand, true)[0]} + ?): ${printCards(dealerhand, true)}
 
-Players hand: ${printCards(playerhand)}
+Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
 Will you hit or stand?`
             );
@@ -36,15 +36,12 @@ function dealerturn(){
         deal(deck, dealerhand);
         action = prompt(
             `
-            Dealers hand: ${printCards(dealerhand)}
+Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand, true)}
 
-
-            Players hand: ${printCards(playerhand)}
+Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
-            
-            `
-
-        );
+Will you hit or stand?`
+            );
     }
 }
 
@@ -126,4 +123,29 @@ function printCard(card){
         'clovers'
     ]];
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
+}
+
+function points(target, hidefirst = false){
+    let points = [0, 0];
+    for (let i = 0; i < target.length; i++){
+        if (i == 0 && hidefirst){
+        }
+        else{
+            if (target[i][0] == 1){
+                points[0] += 1;
+                points[1]++;
+            }
+            else{
+                points[0] += target[i][0];
+            }
+        }
+    }
+    // add aces to points if possible
+    for (let i = 0; i < points[1]; i++){
+        if (points[0] + 9 < 21 && points[1] > 0){
+            points[0] += 9;
+            points[1]--;
+        }
+    }
+    return points;
 }
