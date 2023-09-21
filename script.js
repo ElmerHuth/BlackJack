@@ -19,13 +19,11 @@ function playerturn(){
     while (action != "stand"){
         action = prompt(
             `
-            Dealers hand: ${printCards(dealerhand, true)}
+Dealers hand: ${printCards(dealerhand, true)}
 
-
-            Players hand: ${printCards(playerhand)}
+Players hand: ${printCards(playerhand)}
             
-            
-            Will you hit or stand?`
+Will you hit or stand?`
             );
         if (action == 'hit'){
             deal(deck, playerhand);
