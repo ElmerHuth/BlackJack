@@ -4,24 +4,16 @@ let playerhand = [];
 let dealerhand = [];
 let action = '';
 
-playBlackJack();
+// put everyones cards back into the deck if you've played before
+returncards(playerhand, playerhand.length);
+returncards(dealerhand, dealerhand.length);
 
-function playBlackJack(){
-    startRound();
-    playerturn();
-    dealerturn();
-}
+deck = shuffle(deck);
+deal(deck, dealerhand, 2);
+deal(deck, playerhand, 2);
 
-function startRound(){
-
-    // put everyones cards back into the deck if you've played before
-    returncards(playerhand, playerhand.length);
-    returncards(dealerhand, dealerhand.length);
- 
-    deck = shuffle(deck);
-    deal(deck, dealerhand, 2);
-    deal(deck, playerhand, 2);
-}
+playerturn();
+dealerturn();
 
 function playerturn(){
     while (action != "stand"){
