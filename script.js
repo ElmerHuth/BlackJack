@@ -179,12 +179,22 @@ function points(target, hidefirst = false){
         if (i == 0 && hidefirst){
         }
         else{
-            if (target[i][0] == 1){
-                points[0] += 1;
-                points[1]++;
-            }
-            else{
-                points[0] += target[i][0];
+            switch(target[i][0]){
+                case 1:
+                    points[0] += 1;
+                    points[1]++;
+                    break;
+                case 11:
+                    points[0] += 10;
+                    break;
+                case 12:
+                    points[0] += 10;
+                    break;
+                case 13:
+                    points[0] += 10;
+                    break;
+                default:
+                    points[0] += target[i][0];
             }
         }
     }
