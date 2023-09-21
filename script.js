@@ -14,17 +14,16 @@ deal(deck, playerhand, 2);
 
 playerturn();
 dealerturn();
+endgame();
 
 function playerturn(){
-    while (action != "stand"){
-        action = prompt(
-            `
-Dealers hand(${points(dealerhand, true)[0]} + ?): ${printCards(dealerhand, true)}
+    while (action != "stand" && points(playerhand)[0] < 22){
+        action = prompt(`
+Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand, true)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
-Will you hit or stand?`
-            );
+Will you hit or stand?`);
         if (action == 'hit'){
             deal(deck, playerhand);
         }
@@ -32,17 +31,51 @@ Will you hit or stand?`
 }
 
 function dealerturn(){
-    while(points(dealerhand)[0] < 17){
-        deal(deck, dealerhand);
-        action = prompt(
-            `
-Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand, true)}
+    // skips play if player is bust
+    while(points(dealerhand)[0] < 17 && points(playerhand)[0] < 22){
+        action = prompt(`
+Dealers hand(${points(dealerhand)[0]}): ${printCards(dealerhand)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
-Will you hit or stand?`
-            );
+`);
+        deal(deck, dealerhand);
     }
+}
+
+function endgame(){
+    let result = '';
+    // Dont reveal dealers card if player is bust
+    let reveal = false;
+    // Förlåt för alla 'if' satser
+    if (points(playerhand)[0] <= 21){
+        if (points(dealerhand)[0] <= 21){
+            if (points(playerhand)[0] < points(dealerhand)){
+                if(points(playerhand)[0] == points(dealerhand)[0]){
+                    result = 'The game is a Draw!';
+                }
+                else{
+                    result = 'Player Wins!';
+                }
+            }
+            else{
+                result = 'Dealer Wins!';
+            }
+        }
+        else{
+            result = 'Dealer is BUST, Player Wins!';
+        }
+    }
+    else{
+        result = 'Player is BUST, Dealer Wins!';
+        dontreveal = true;
+    }
+    action = prompt(`
+Dealers hand(${points(dealerhand, reveal)[0]}): ${printCards(dealerhand, reveal)}
+
+Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
+            
+${result}`);
 }
 
 // ace = 1, knight = 11, queen = 12, king = 13
