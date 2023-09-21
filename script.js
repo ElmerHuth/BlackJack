@@ -1,25 +1,42 @@
 // Setup
-let deck = [[1,1],[10,1],[13,1],[13,1]];//createDeck();
+let deck = createDeck();
 let playerhand = [];
 let dealerhand = [];
 let action = '';
 
-// put everyones cards back into the deck if you've played before
-returncards(playerhand, playerhand.length);
-returncards(dealerhand, dealerhand.length);
+gameloop();
 
-//deck = shuffle(deck);
-deal(deck, dealerhand, 2);
-deal(deck, playerhand, 2);
+function gameloop(){
+    let play = true;
+    prompt('Welcome to BlackJack!');
+    while (play){
+        // put everyones cards back into the deck if you've played before
+        returncards(playerhand, playerhand.length);
+        returncards(dealerhand, dealerhand.length);
 
-playerturn();
-dealerturn();
-endgame();
+        deck = shuffle(deck);
+        deal(deck, dealerhand, 2);
+        deal(deck, playerhand, 2);
+
+        playerturn();
+        dealerturn();
+        endgame();
+
+        // ask if the player wants to play another round
+        action = '';
+        while (action != 'yes' && action != 'no'){
+            action = prompt('Play again? (yes/no)');
+        }
+        if (action == 'no'){
+            break;
+        }
+    }
+    prompt('Thank you for playing! :)');
+}
 
 function playerturn(){
     while (action != "stand" && points(playerhand)[0] < 22){
-        action = prompt(`
-Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand, true)}
+        action = prompt(`Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand, true)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
@@ -33,8 +50,7 @@ Will you hit or stand?`);
 function dealerturn(){
     // skips play if player is bust
     while(points(dealerhand)[0] < 17 && points(playerhand)[0] < 22){
-        action = prompt(`
-Dealers hand(${points(dealerhand)[0]}): ${printCards(dealerhand)}
+        action = prompt(`Dealers hand(${points(dealerhand)[0]}): ${printCards(dealerhand)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
@@ -70,8 +86,7 @@ function endgame(){
         result = 'Player is BUST, Dealer Wins!';
         reveal = true;
     }
-    action = prompt(`
-Dealers hand(${points(dealerhand, reveal)[0]}): ${printCards(dealerhand, reveal)}
+    action = prompt(`Dealers hand(${points(dealerhand, reveal)[0]}): ${printCards(dealerhand, reveal)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
@@ -117,7 +132,7 @@ function returncards(target, amount){
     for(let i = 0; i < amount; i++){
         deck.push(target[i]);
     }
-    target = [];
+    target.splice(0, target.length);
 }
 
 function printCards(cards, hidefirst = false){
