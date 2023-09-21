@@ -2,7 +2,7 @@
 let deck = createDeck();
 let playerhand = [];
 let dealerhand = [];
-let playermove = '';
+let action = '';
 
 playBlackJack();
 
@@ -24,17 +24,18 @@ function startRound(){
 }
 
 function playerturn(){
-    while (playermove != "stand"){
-        playermove = prompt(
+    while (action != "stand"){
+        action = prompt(
             `
-            Players hand: ${printCards(playerhand)}
-            
             Dealers hand: ${printCards(dealerhand, true)}
+
+
+            Players hand: ${printCards(playerhand)}
             
             
             Will you hit or stand?`
             );
-        if (playermove == 'hit'){
+        if (action == 'hit'){
             deal(deck, playerhand);
         }
     }
@@ -43,11 +44,12 @@ function playerturn(){
 function dealerturn(){
     while(points(dealerhand)[0] < 17){
         deal(deck, dealerhand);
-        playermove = prompt(
+        action = prompt(
             `
-            Players hand: ${printCards(playerhand)}
-            
             Dealers hand: ${printCards(dealerhand)}
+
+
+            Players hand: ${printCards(playerhand)}
             
             
             `
@@ -96,20 +98,6 @@ function returncards(target, amount){
         deck.push(target[i]);
     }
     target = [];
-}
-
-function points(target){
-    let points = [0, 0];
-    for (let i = 0; i < target.length; i++){
-        if (target[i][0] == 1){
-            points[0] += 10;
-            points[1]++;
-        }
-        else{
-            points[0] += target[i][0];
-        }
-    }
-    return points;
 }
 
 function printCards(cards, hidefirst = false){
