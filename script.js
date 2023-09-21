@@ -1,5 +1,5 @@
 // Setup
-let deck = createDeck();
+//let deck = createDeck();
 let playerhand = [];
 let dealerhand = [];
 let action = '';
@@ -50,16 +50,16 @@ function endgame(){
     // Förlåt för alla 'if' satser
     if (points(playerhand)[0] <= 21){
         if (points(dealerhand)[0] <= 21){
-            if (points(playerhand)[0] < points(dealerhand)){
+            if (points(playerhand)[0] <= points(dealerhand)[0]){
                 if(points(playerhand)[0] == points(dealerhand)[0]){
                     result = 'The game is a Draw!';
                 }
                 else{
-                    result = 'Player Wins!';
+                    result = 'Dealer Wins!';
                 }
             }
             else{
-                result = 'Dealer Wins!';
+                result = 'Player Wins!';
             }
         }
         else{
@@ -175,8 +175,8 @@ function points(target, hidefirst = false){
     }
     // add aces to points if possible
     for (let i = 0; i < points[1]; i++){
-        if (points[0] + 9 < 21 && points[1] > 0){
-            points[0] += 9;
+        if (points[0] + 10 < 22 && points[1] > 0){
+            points[0] += 10;
             points[1]--;
         }
     }
