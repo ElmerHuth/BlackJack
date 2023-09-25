@@ -1,7 +1,15 @@
 body {
     background-color: darkgreen;
+
   }
-#board svg {
+
+#dealerside, #playerside{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+#dealerside svg, #playerside svg {
     border: 10px solid white;
     border-radius: 11px;
 }
