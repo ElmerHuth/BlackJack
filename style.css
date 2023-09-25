@@ -29,3 +29,20 @@ img {
   margin-left: 15.25%;
   top: 50.5%;
 }
+#deckcount, #dealerpoints, #playerpoints {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: white;
+  position: absolute;
+}
+#deckcount {
+  margin-left: 5%;
+  top: 67%;
+}
+#dealerpoints{
+  margin-left: 5%;
+  top: 18%;
+}
+#playerpoints{
+  right: 47%;
+  top: 18%;
+}
