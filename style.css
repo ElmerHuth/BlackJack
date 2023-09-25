@@ -2,14 +2,30 @@ body {
     background-color: darkgreen;
 
   }
-
-#dealerside, #playerside{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-}
-#dealerside svg, #playerside svg {
+body svg {
     border: 10px solid white;
-    border-radius: 11px;
+    border-radius: 10px;
+}
+#playerhand, #dealerhand, #deck {
+  position: absolute;
+  height: 85mm;
+  width: 60mm;
+}
+img {
+  position: absolute;
+  height: 88mm;
+  width: 63mm;
+}
+#deck, #dealerhand {
+  margin-left: 15%;
+}
+#playerhand {
+  right: 25%;
+}
+#deck {
+  top: 50%;
+}
+img {
+  margin-left: 15.25%;
+  top: 50.5%;
 }
