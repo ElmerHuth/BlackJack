@@ -1,3 +1,7 @@
 body {
     background-color: darkgreen;
   }
+#board svg {
+    border: 10px solid white;
+    border-radius: 11px;
+}
