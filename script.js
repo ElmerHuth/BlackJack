@@ -239,6 +239,12 @@ function gcreateCard(card, dealer = false){
     let createcard = document.createElement("img");
     createcard.src = `images/${names[0][card[0] - 1]} ${names[1][card[1] - 1]}.jpg`;
     document.body.appendChild(createcard);
-    createcard.style.right = `${92 - (playerhand.length - 1) * 10}mm`;
+
     createcard.style.top = "3mm";
+    if (!dealer){
+        createcard.style.right = `${102 - (playerhand.length - 1) * 10}mm`;
+    }
+    else{
+        createcard.style.left = `${65 + (dealerhand.length - 1) * 10}mm`;
+    }
 }
