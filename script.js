@@ -3,6 +3,7 @@ let deck = createDeck();
 let playerhand = [];
 let dealerhand = [];
 let action = '';
+let showingcards = document.getElementById("showingcards");
 const names = 
     [[
         'Ace',
@@ -26,9 +27,13 @@ const names =
         'Clubs'
     ]];
 
-gameloop();
+function newgame(){
 
-function gameloop(){
+    showingcards.remove();
+    showingcards = document.createElement("div");
+    showingcards.id = "showingcards";
+    document.body.appendChild(showingcards);
+
     returncards(playerhand, playerhand.length);
     returncards(dealerhand, dealerhand.length);
 
@@ -250,7 +255,7 @@ function gcreateCard(card, dealer = false, hidefirst = false){
         createcard.src = `images/Back.jpg`;
         createcard.id = "hiddencard";
     }
-    document.body.appendChild(createcard);
+    showingcards.appendChild(createcard);
 
     createcard.style.top = "3mm";
     if (!dealer){

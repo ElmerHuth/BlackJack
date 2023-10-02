@@ -15,10 +15,11 @@
     <svg id="playerhand"></svg>
     <h1 id="playerpoints">(0)</h1>
     <div id="buttons">
-    <button id="newround">new round</button>
+    <button id="newround" onclick="newgame()">new round</button>
     <button id="hit" onclick="deal(deck, playerhand)" disabled>hit</button>
-    <button id="stand" onclick="dealerturn()">stand</button>
+    <button id="stand" onclick="dealerturn()" disabled>stand</button>
     </div>
+    <div id="showingcards"></div>
     <script type="text/javascript" src="script.js"></script>
 </body>
 </html>
