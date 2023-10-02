@@ -66,13 +66,32 @@ Will you hit or stand?`);
 function dealerturn(){
     const button = document.getElementById("hit");
     button.setAttribute("disabled", "");
+    const names = 
+    [[
+        'Ace',
+        'Two',
+        'Three',
+        'Four',
+        'Five',
+        'Six',
+        'Seven',
+        'Eight',
+        'Nine',
+        'Ten',
+        'Jack',
+        'Queen',
+        'King'
+    ],
+    [
+        'Hearts',
+        'Diamonds',
+        'Spades',
+        'Clubs'
+    ]];
     // skips play if player is bust
     while(points(dealerhand, true)[0] < 17 && points(playerhand)[0] < 22){
-        action = prompt(`Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand)}
-
-Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
-            
-`);
+        const card = document.getElementById("hiddencard");
+        card.src = `images/${names[0][dealerhand[0][0] - 1]} ${names[1][dealerhand[0][1] - 1]}.jpg`;
         deal(deck, dealerhand, 1, true);
     }
 }
@@ -266,6 +285,7 @@ function gcreateCard(card, dealer = false, hidefirst = false){
     }
     else{
         createcard.src = `images/Back.jpg`;
+        createcard.id = "hiddencard";
     }
     document.body.appendChild(createcard);
 
