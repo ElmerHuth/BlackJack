@@ -7,6 +7,18 @@ let action = '';
 gameloop();
 
 function gameloop(){
+    returncards(playerhand, playerhand.length);
+    returncards(dealerhand, dealerhand.length);
+
+    deck = shuffle(deck);
+
+    deal(deck, dealerhand, 1, true, true);
+    deal(deck, dealerhand, 1, true);
+    deal(deck, playerhand, 2);
+}
+
+/*
+function gameloop(){
     let play = true;
     prompt('Welcome to BlackJack!');
     while (play){
@@ -33,6 +45,7 @@ function gameloop(){
     }
     prompt('Thank you for playing! :)');
 }
+*/
 
 function playerturn(){
     while (action != "stand" && points(playerhand)[0] < 22){
@@ -120,12 +133,12 @@ function shuffle(Deck){
     return outputDeck;
 }
 
-function deal(deck, hand, count = 1, dealer = false){
+function deal(deck, hand, count = 1, dealer = false, hidefirst = false){
     for (let i = 0; i < count; i++)
     {
         hand.push(deck[0]);
         // create card graphically
-        gcreateCard(deck[0], dealer);
+        gcreateCard(deck[0], dealer, hidefirst);
         deck.splice(0, 1);
     }
 }
@@ -211,7 +224,7 @@ function points(target, dealer = false, hidefirst = false){
 }
 
 // Graphical functions
-function gcreateCard(card, dealer = false){
+function gcreateCard(card, dealer = false, hidefirst = false){
     let source = "";
     const names = 
     [[
@@ -237,7 +250,12 @@ function gcreateCard(card, dealer = false){
     ]];
 
     let createcard = document.createElement("img");
-    createcard.src = `images/${names[0][card[0] - 1]} ${names[1][card[1] - 1]}.jpg`;
+    if (!hidefirst){
+        createcard.src = `images/${names[0][card[0] - 1]} ${names[1][card[1] - 1]}.jpg`;
+    }
+    else{
+        createcard.src = `images/Back.jpg`;
+    }
     document.body.appendChild(createcard);
 
     createcard.style.top = "3mm";
