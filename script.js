@@ -39,7 +39,9 @@ function gameloop(){
     deal(deck, playerhand, 2);
 
     const button = document.getElementById("hit");
+    const stand = document.getElementById("stand");
     button.removeAttribute("disabled");
+    stand.removeAttribute("disabled");
 }
 
 /*
@@ -87,19 +89,20 @@ Will you hit or stand?`);
 
 function dealerturn(){
     const button = document.getElementById("hit");
+    const stand = document.getElementById("stand");
     button.setAttribute("disabled", "");
+    stand.setAttribute("disabled", "");
     // skips play if player is bust
     while(points(dealerhand, true)[0] < 17 && points(playerhand)[0] < 22){
         const card = document.getElementById("hiddencard");
         card.src = `images/${names[0][dealerhand[0][0] - 1]} ${names[1][dealerhand[0][1] - 1]}.jpg`;
         deal(deck, dealerhand, 1, true);
     }
+    endgame();
 }
 
 function endgame(){
     let result = '';
-    // hide dealers card if player is bust
-    let hide = false;
     // Förlåt för alla 'if' satser
     if (points(playerhand)[0] <= 21){
         if (points(dealerhand, true)[0] <= 21){
@@ -121,13 +124,18 @@ function endgame(){
     }
     else{
         result = 'Player is BUST, Dealer Wins!';
-        hide = true;
     }
+    const winner = document.createElement("button");
+    winner.setAttribute("onclick", "this.remove()");
+    winner.id = "winner";
+    winner.innerHTML = result;
+    document.body.appendChild(winner);
+    /*
     action = prompt(`Dealers hand(${points(dealerhand, true, hide)[0]}): ${printCards(dealerhand, hide)}
 
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
-${result}`);
+${result}`);*/
 }
 
 // ace = 1, knight = 11, queen = 12, king = 13
