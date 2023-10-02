@@ -3,6 +3,28 @@ let deck = createDeck();
 let playerhand = [];
 let dealerhand = [];
 let action = '';
+const names = 
+    [[
+        'Ace',
+        'Two',
+        'Three',
+        'Four',
+        'Five',
+        'Six',
+        'Seven',
+        'Eight',
+        'Nine',
+        'Ten',
+        'Jack',
+        'Queen',
+        'King'
+    ],
+    [
+        'Hearts',
+        'Diamonds',
+        'Spades',
+        'Clubs'
+    ]];
 
 gameloop();
 
@@ -66,28 +88,6 @@ Will you hit or stand?`);
 function dealerturn(){
     const button = document.getElementById("hit");
     button.setAttribute("disabled", "");
-    const names = 
-    [[
-        'Ace',
-        'Two',
-        'Three',
-        'Four',
-        'Five',
-        'Six',
-        'Seven',
-        'Eight',
-        'Nine',
-        'Ten',
-        'Jack',
-        'Queen',
-        'King'
-    ],
-    [
-        'Hearts',
-        'Diamonds',
-        'Spades',
-        'Clubs'
-    ]];
     // skips play if player is bust
     while(points(dealerhand, true)[0] < 17 && points(playerhand)[0] < 22){
         const card = document.getElementById("hiddencard");
@@ -193,28 +193,6 @@ function printCards(cards, hidefirst = false){
 }
 
 function printCard(card){
-    const names = 
-    [[
-        'Ace',
-        'Two',
-        'Three',
-        'Four',
-        'Five',
-        'Six',
-        'Seven',
-        'Eight',
-        'Nine',
-        'Ten',
-        'Knight',
-        'Queen',
-        'King'
-    ],
-    [
-        'Hearts',
-        'Diamonds',
-        'Spades',
-        'Clovers'
-    ]];
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
 
@@ -256,29 +234,6 @@ function points(target, dealer = false, hidefirst = false){
 // Graphical functions
 function gcreateCard(card, dealer = false, hidefirst = false){
     let source = "";
-    const names = 
-    [[
-        'Ace',
-        'Two',
-        'Three',
-        'Four',
-        'Five',
-        'Six',
-        'Seven',
-        'Eight',
-        'Nine',
-        'Ten',
-        'Jack',
-        'Queen',
-        'King'
-    ],
-    [
-        'Hearts',
-        'Diamonds',
-        'Spades',
-        'Clubs'
-    ]];
-
     let createcard = document.createElement("img");
     if (!hidefirst){
         createcard.src = `images/${names[0][card[0] - 1]} ${names[1][card[1] - 1]}.jpg`;
