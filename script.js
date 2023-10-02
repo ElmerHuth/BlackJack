@@ -15,6 +15,9 @@ function gameloop(){
     deal(deck, dealerhand, 1, true, true);
     deal(deck, dealerhand, 1, true);
     deal(deck, playerhand, 2);
+
+    const button = document.getElementById("hit");
+    button.removeAttribute("disabled");
 }
 
 /*
@@ -61,6 +64,8 @@ Will you hit or stand?`);
 }
 
 function dealerturn(){
+    const button = document.getElementById("hit");
+    button.setAttribute("disabled", "");
     // skips play if player is bust
     while(points(dealerhand, true)[0] < 17 && points(playerhand)[0] < 22){
         action = prompt(`Dealers hand(${points(dealerhand, true)[0]}): ${printCards(dealerhand)}
@@ -140,6 +145,12 @@ function deal(deck, hand, count = 1, dealer = false, hidefirst = false){
         // create card graphically
         gcreateCard(deck[0], dealer, hidefirst);
         deck.splice(0, 1);
+    }
+
+    if (points(playerhand)[0] > 21){
+        const button = document.getElementById("hit");
+        button.setAttribute("disabled", "");
+        dealerturn();
     }
 }
 
