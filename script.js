@@ -15,7 +15,7 @@ function gameloop(){
         returncards(dealerhand, dealerhand.length);
 
         deck = shuffle(deck);
-        deal(deck, dealerhand, 2);
+        deal(deck, dealerhand, 2, true);
         deal(deck, playerhand, 2);
 
         playerturn();
@@ -55,7 +55,7 @@ function dealerturn(){
 Players hand(${points(playerhand)[0]}): ${printCards(playerhand)}
             
 `);
-        deal(deck, dealerhand);
+        deal(deck, dealerhand, 1, true);
     }
 }
 
@@ -120,10 +120,12 @@ function shuffle(Deck){
     return outputDeck;
 }
 
-function deal(deck, hand, count = 1){
+function deal(deck, hand, count = 1, dealer = false){
     for (let i = 0; i < count; i++)
     {
         hand.push(deck[0]);
+        // create card graphically
+        gcreateCard(deck[0], dealer);
         deck.splice(0, 1);
     }
 }
@@ -165,10 +167,10 @@ function printCard(card){
         'King'
     ],
     [
-        'hearts',
-        'diamonds',
-        'spades',
-        'clovers'
+        'Hearts',
+        'Diamonds',
+        'Spades',
+        'Clovers'
     ]];
     return `${names[0][card[0] - 1]} of ${names[1][card[1] - 1]}`;
 }
@@ -206,4 +208,37 @@ function points(target, dealer = false, hidefirst = false){
         }
     }
     return points;
+}
+
+// Graphical functions
+function gcreateCard(card, dealer = false){
+    let source = "";
+    const names = 
+    [[
+        'Ace',
+        'Two',
+        'Three',
+        'Four',
+        'Five',
+        'Six',
+        'Seven',
+        'Eight',
+        'Nine',
+        'Ten',
+        'Jack',
+        'Queen',
+        'King'
+    ],
+    [
+        'Hearts',
+        'Diamonds',
+        'Spades',
+        'Clubs'
+    ]];
+
+    let createcard = document.createElement("img");
+    createcard.src = `images/${names[0][card[0] - 1]} ${names[1][card[1] - 1]}.jpg`;
+    document.body.appendChild(createcard);
+    createcard.style.right = `${92 - (playerhand.length - 1) * 10}mm`;
+    createcard.style.top = "3mm";
 }
