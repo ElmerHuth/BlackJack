@@ -43,6 +43,8 @@ function newgame(){
     deal(deck, dealerhand, 1, true);
     deal(deck, playerhand, 2);
 
+    gupdatePoints(true);
+
     const button = document.getElementById("hit");
     const stand = document.getElementById("stand");
     button.removeAttribute("disabled");
@@ -98,16 +100,19 @@ function dealerturn(){
     button.setAttribute("disabled", "");
     stand.setAttribute("disabled", "");
     // skips play if player is bust
-    while(points(dealerhand, true)[0] < 17 && points(playerhand)[0] < 22){
+    if(points(playerhand)[0] < 22){
         const card = document.getElementById("hiddencard");
         card.src = `images/${names[0][dealerhand[0][0] - 1]} ${names[1][dealerhand[0][1] - 1]}.jpg`;
-        deal(deck, dealerhand, 1, true);
+        while(points(dealerhand, true)[0] < 17){
+            deal(deck, dealerhand, 1, true);
+        }
     }
     endgame();
 }
 
 function endgame(){
     let result = '';
+    let hide = false;
     // Förlåt för alla 'if' satser
     if (points(playerhand)[0] <= 21){
         if (points(dealerhand, true)[0] <= 21){
@@ -129,7 +134,9 @@ function endgame(){
     }
     else{
         result = 'Player is BUST, Dealer Wins!';
+        hide = true;
     }
+    gupdatePoints(hide);
     const winner = document.createElement("button");
     winner.setAttribute("onclick", "this.remove()");
     winner.id = "winner";
@@ -184,6 +191,12 @@ function deal(deck, hand, count = 1, dealer = false, hidefirst = false){
         button.setAttribute("disabled", "");
         dealerturn();
     }
+
+    if (!dealer){
+        gupdatePoints(true);
+    }
+
+    gupdateDeck();
 }
 
 function returncards(target, amount){
@@ -264,4 +277,17 @@ function gcreateCard(card, dealer = false, hidefirst = false){
     else{
         createcard.style.left = `${65 + (dealerhand.length - 1) * 10}mm`;
     }
+}
+
+function gupdatePoints(hidefirst = false){
+    const dealerpoints = document.getElementById("dealerpoints");
+    const playerpoints = document.getElementById("playerpoints");
+
+    dealerpoints.innerHTML = `(${points(dealerhand, true, hidefirst)[0]})`;
+    playerpoints.innerHTML = `(${points(playerhand)[0]})`;
+}
+
+function gupdateDeck(){
+    const deckcount = document.getElementById("deckcount");
+    deckcount.innerHTML = `(${deck.length})`;
 }
