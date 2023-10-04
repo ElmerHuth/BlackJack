@@ -4,6 +4,7 @@ let playerhand = [];
 let dealerhand = [];
 let action = '';
 let showingcards = document.getElementById("showingcards");
+const newroundbtn = document.getElementById("newround");
 const names = 
     [[
         'Ace',
@@ -26,6 +27,8 @@ const names =
         'Spades',
         'Clubs'
     ]];
+
+newroundbtn.removeAttribute("disabled");
 
 function newgame(){
 
@@ -138,10 +141,11 @@ function endgame(){
     }
     gupdatePoints(hide);
     const winner = document.createElement("button");
-    winner.setAttribute("onclick", "this.remove()");
+    winner.setAttribute("onclick", `this.remove(); newroundbtn.removeAttribute("disabled");`);
     winner.id = "winner";
     winner.innerHTML = result;
     document.body.appendChild(winner);
+    newroundbtn.setAttribute("disabled", "");
     /*
     action = prompt(`Dealers hand(${points(dealerhand, true, hide)[0]}): ${printCards(dealerhand, hide)}
 
