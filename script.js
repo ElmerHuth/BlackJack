@@ -28,7 +28,7 @@ const names =
         'Clubs'
     ]];
 
-newroundbtn.removeAttribute("disabled");
+enableButton(newroundbtn);
 
 function newgame(){
 
@@ -100,8 +100,8 @@ Will you hit or stand?`);
 function dealerturn(){
     const button = document.getElementById("hit");
     const stand = document.getElementById("stand");
-    button.setAttribute("disabled", "");
-    stand.setAttribute("disabled", "");
+    disableButton(button);
+    disableButton(stand);
     // skips play if player is bust
     if(points(playerhand)[0] < 22){
         const card = document.getElementById("hiddencard");
@@ -141,11 +141,14 @@ function endgame(){
     }
     gupdatePoints(hide);
     const winner = document.createElement("button");
-    winner.setAttribute("onclick", `this.remove(); newroundbtn.removeAttribute("disabled");`);
+    winner.setAttribute("onclick", `this.remove(); enableButton(newroundbtn);`);
     winner.id = "winner";
     winner.innerHTML = result;
     document.body.appendChild(winner);
-    newroundbtn.setAttribute("disabled", "");
+    winner.style.setProperty('--left', `${window.innerWidth / 2 - winner.offsetWidth / 2}px`);
+    winner.style.setProperty('--bottom', `${window.innerHeight / 2 - winner.offsetHeight / 2}px`);
+    disableButton(newroundbtn);
+    //newroundbtn.setAttribute("disabled", "");
     /*
     action = prompt(`Dealers hand(${points(dealerhand, true, hide)[0]}): ${printCards(dealerhand, hide)}
 
@@ -294,4 +297,12 @@ function gupdatePoints(hidefirst = false){
 function gupdateDeck(){
     const deckcount = document.getElementById("deckcount");
     deckcount.innerHTML = `(${deck.length})`;
+}
+
+function disableButton(button){
+    button.setAttribute("disabled", "");
+}
+
+function enableButton(button){
+    button.removeAttribute("disabled");
 }

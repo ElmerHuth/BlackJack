@@ -85,6 +85,6 @@ button:hover {
   font-size: 75px;
   border-radius: 12px;
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: var(--left);
+  bottom: var(--bottom);
 }
